@@ -46,14 +46,30 @@ export class ServicesService {
     return this.servicesRepository.find();
   }
 
-  findOne(id: number) {
-    const servDb = this.servicesRepository.findOne({
+  async findOne(id: number) {
+    const servDb = await this.servicesRepository.findOne({
       where: { id },
-      relations: { serviceType: true, user: true },
+      relations: { serviceType: true, user: true, journeys: true },
     });
     if (!servDb) throw new NotFoundException('Service not found');
 
     return servDb;
+  }
+
+  getByUserId(id: number) {
+    return this.servicesRepository.findOne({
+      where: { user: { id } },
+      relations: { journeys: true, serviceType: true },
+    });
+  }
+
+  async getByUserLogged(request: any) {
+    const { id } = request.user;
+
+    return this.servicesRepository.findOne({
+      where: { user: { id } },
+      relations: { journeys: true, serviceType: true },
+    });
   }
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
@@ -67,6 +83,15 @@ export class ServicesService {
     servDb.price = price || servDb.price;
 
     return this.servicesRepository.save(servDb);
+  }
+
+  async getByCategoryId(id: number) {
+    const servicesDb = await this.servicesRepository.find({
+      where: { serviceType: { id } },
+    });
+    if (!servicesDb) throw new NotFoundException('Services not found');
+
+    return servicesDb;
   }
 
   remove(id: number) {
@@ -86,7 +111,7 @@ export class ServicesService {
   //   const servDb = await this.servicesRepository.findOne({ where: { id } });
   //   if (!servDb) throw new NotFoundException('Service not found');
 
-  //   servDb.favorites.push(userDb);
+  //   userDb.favorites.push(servDb);
 
   //   return await this.servicesRepository.save(servDb);
   // }

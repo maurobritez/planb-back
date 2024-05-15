@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -29,7 +33,7 @@ export class UsersService {
   async getById(id: number) {
     const userDb = await this.usersRepository.findOne({
       where: { id },
-      relations: { services: true },
+      //relations: { services: true, favoriteServices: true },
     });
     if (!userDb) throw new NotFoundException('User not found');
     return userDb;
@@ -61,9 +65,11 @@ export class UsersService {
     return this.usersRepository.save(userDb);
   }
 
-  async updatePass(id: number, data: any) {
+  async updatePass(data: any, request: any) {
     const { oldPass, newPass } = data;
-    const userDb = await this.usersRepository.findOne({ where: { id } });
+    const { email } = request.user;
+
+    const userDb = await this.usersRepository.findOne({ where: { email } });
     if (!userDb) throw new NotFoundException('User not found');
 
     const isPasswordValid = await bcryptjs.compare(oldPass, userDb.pass);
@@ -96,16 +102,24 @@ export class UsersService {
     return true;
   }
 
-  // todo: hacer que funcione
-  // async addToFavorites(request: any, serviceId: number): Promise<User> {
+  // importa el service como parametro para evitar depenendecia circular
+  // async addToFavorites(request: any, id: number) {
   //   const { email } = request.user;
   //   const user = await this.usersRepository.findOne({
   //     where: { email },
   //     relations: { favorites: true },
   //   });
-  //   const serviceToAdd = await this.servicesService.findOne(serviceId);
-  //   if (!serviceId) throw new NotFoundException('Service not found');
-  //   user.favorites.push(serviceToAdd);
-  //   return this.usersRepository.save(user);
+  //   if (!user) throw new NotFoundException('Esto no deberia pasar');
+
+  //   try {
+  //     const service = await this.servicesRepository.findOne({ where: { id } });
+  //     if (!service) throw new NotFoundException('Service not found');
+
+  //     user.favorites.push(service);
+  //     return this.usersRepository.save(user);
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new BadRequestException();
+  //   }
   // }
 }

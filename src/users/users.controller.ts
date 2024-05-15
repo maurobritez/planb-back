@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
@@ -40,9 +41,10 @@ export class UsersController {
     return this.usersService.updateById(id, updateUserDto);
   }
 
-  @Put('reset-pass/:id')
-  resetPassById(@Param('id') id: number, @Body() data: any) {
-    return this.usersService.updatePass(id, data);
+  @Put('ResetPass')
+  @UseGuards(AuthGuard)
+  resetPassById(@Body() data: any, @Req() request: any) {
+    return this.usersService.updatePass(data, request);
   }
 
   @Put('score/:id')
@@ -51,12 +53,12 @@ export class UsersController {
     //puntuar
   }
 
-  @Put('favorites/:id')
-  @UseGuards(AuthGuard)
-  addToFavorite(@Req() request: any, @Param('id') serviceId: number) {
-    // return this.usersService.addToFavorites(request, serviceId);
-    // puta la wea que no anda
-  }
+  // agrega un servicio a favoritos
+  // @Put('favorites/:id')
+  // @UseGuards(AuthGuard)
+  // addToFavorite(@Req() request: any, @Param('id') id: number) {
+  //   return this.usersService.addToFavorites(request, id);
+  // }
 
   // todo: cambiar role
   // todo: change email

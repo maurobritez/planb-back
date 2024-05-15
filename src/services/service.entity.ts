@@ -45,6 +45,6 @@ export class Service {
   journeys: Journey[];
 
   // usuarios que agregaron el servicio a sus favoritos
-  // @ManyToMany(() => User, (user) => user.favorites)
-  // favorites: User[];
+  @ManyToMany(() => User, (user) => user.favoriteServices)
+  users: User[];
 }

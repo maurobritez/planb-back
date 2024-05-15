@@ -70,4 +70,8 @@ export class User {
   // @ManyToMany(() => Service, { cascade: true })
   // @JoinTable()
   // favorites: Service[];
+
+  @ManyToMany(() => Service)
+  @JoinTable()
+  favoriteServices: Service[];
 }

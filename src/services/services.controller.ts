@@ -37,6 +37,23 @@ export class ServicesController {
     return this.servicesService.findOne(id);
   }
 
+  @Get('type/:typeId')
+  findServiceType(@Param('typeId') id: number) {
+    return this.servicesService.getByCategoryId(id);
+  }
+
+  // no me dejaba poner solo user, sorry
+  @Get('user/logged')
+  @UseGuards(AuthGuard)
+  getByUser(@Req() request: any) {
+    return this.servicesService.getByUserLogged(request);
+  }
+
+  @Get('user/:id')
+  getByUserId(@Param('id') id: number) {
+    return this.servicesService.getByUserId(id);
+  }
+
   @Put(':id')
   @UsePipes(new ValidationPipe())
   update(@Param('id') id: number, @Body() updateServiceDto: UpdateServiceDto) {

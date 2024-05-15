@@ -23,9 +23,9 @@ Implementar:
 
 - migraciones
 - Score
-- Favoritos
 - reviews
 - Company?
 
 - hacer los scripts
 - Documentar?
+- no se si agregar una exeption cuando no encuentra servicios o que mande un array vacio

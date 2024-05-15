@@ -6,6 +6,7 @@ import { envs } from './config/dotenv-config';
 import { ServicesModule } from './services/services.module';
 import { ServiceTypeModule } from './service-type/service-type.module';
 import { JourneyModule } from './journey/journey.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { JourneyModule } from './journey/journey.module';
     ServicesModule,
     ServiceTypeModule,
     JourneyModule,
+    FavoritesModule,
   ],
   controllers: [],
   providers: [],
