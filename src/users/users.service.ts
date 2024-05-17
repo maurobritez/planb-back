@@ -33,7 +33,12 @@ export class UsersService {
   async getById(id: number) {
     const userDb = await this.usersRepository.findOne({
       where: { id },
-      //relations: { services: true, favoriteServices: true },
+      relations: {
+        services: true,
+        // favoriteServices: true,
+        // givenScores: true,
+        // receivedScores: true,
+      },
     });
     if (!userDb) throw new NotFoundException('User not found');
     return userDb;
@@ -80,10 +85,6 @@ export class UsersService {
     return this.usersRepository.save(userDb);
   }
 
-  async rateUserById(id: number, score: number) {
-    // todo : implementar
-  }
-
   async changeStatusById(id: number) {
     const userDb = await this.usersRepository.findOne({ where: { id } });
     if (!userDb) throw new NotFoundException('User not found');
@@ -101,25 +102,4 @@ export class UsersService {
     await this.usersRepository.delete(id);
     return true;
   }
-
-  // importa el service como parametro para evitar depenendecia circular
-  // async addToFavorites(request: any, id: number) {
-  //   const { email } = request.user;
-  //   const user = await this.usersRepository.findOne({
-  //     where: { email },
-  //     relations: { favorites: true },
-  //   });
-  //   if (!user) throw new NotFoundException('Esto no deberia pasar');
-
-  //   try {
-  //     const service = await this.servicesRepository.findOne({ where: { id } });
-  //     if (!service) throw new NotFoundException('Service not found');
-
-  //     user.favorites.push(service);
-  //     return this.usersRepository.save(user);
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw new BadRequestException();
-  //   }
-  // }
 }

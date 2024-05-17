@@ -1,4 +1,5 @@
 import { IsBoolean } from 'class-validator';
+import { Score } from 'src/score/score.entity';
 import { Service } from 'src/services/service.entity';
 import {
   Column,
@@ -52,9 +53,11 @@ export class User {
   @Column({ default: false })
   dniC: boolean;
 
-  // todo: etc.
-  // @Column('integer', { array: true, default: '{}' })
-  // score: number[];
+  @OneToMany(() => Score, (score) => score.scorerUser)
+  givenScores: Score[];
+
+  @OneToMany(() => Score, (score) => score.scoredUser)
+  receivedScores: Score[];
 
   @Column({ default: true })
   @IsBoolean()
@@ -66,10 +69,6 @@ export class User {
   // servicios creado por el usuario
   @OneToMany(() => Service, (service) => service.user)
   services: Service[];
-
-  // @ManyToMany(() => Service, { cascade: true })
-  // @JoinTable()
-  // favorites: Service[];
 
   @ManyToMany(() => Service)
   @JoinTable()

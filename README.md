@@ -22,10 +22,12 @@ Definir:
 Implementar:
 
 - migraciones
-- Score
-- reviews
+- Lo de Journeys que hice con el orto
 - Company?
 
 - hacer los scripts
 - Documentar?
-- no se si agregar una exeption cuando no encuentra servicios o que mande un array vacio
+
+### Importante
+
+La lógica de Score y Reviews se cambio un poco... y la entidad User tiene algunas props más

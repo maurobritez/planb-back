@@ -7,6 +7,7 @@ import { ServicesModule } from './services/services.module';
 import { ServiceTypeModule } from './service-type/service-type.module';
 import { JourneyModule } from './journey/journey.module';
 import { FavoritesModule } from './favorites/favorites.module';
+import { ScoreModule } from './score/score.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { FavoritesModule } from './favorites/favorites.module';
     ServiceTypeModule,
     JourneyModule,
     FavoritesModule,
+    ScoreModule,
   ],
   controllers: [],
   providers: [],

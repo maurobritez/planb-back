@@ -47,20 +47,7 @@ export class UsersController {
     return this.usersService.updatePass(data, request);
   }
 
-  @Put('score/:id')
-  @UseGuards(AuthGuard)
-  rateUser(@Param('id') id: number) {
-    //puntuar
-  }
-
-  // agrega un servicio a favoritos
-  // @Put('favorites/:id')
-  // @UseGuards(AuthGuard)
-  // addToFavorite(@Req() request: any, @Param('id') id: number) {
-  //   return this.usersService.addToFavorites(request, id);
-  // }
-
-  // todo: cambiar role
+  // todo: change role
   // todo: change email
   // todo: update por QR
 
